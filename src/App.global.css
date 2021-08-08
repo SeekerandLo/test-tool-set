@@ -1,0 +1,91 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+@import url(./render-process/layout/sider/sider.css);
+@import url(./render-process/assets/variables.css);
+@import url(./render-process/assets/nav.css);
+@import url(./render-process/pages/weekly-plan.css);
+
+.icon {
+  color: var(--color-border)
+}
+
+
+.tool-set-main {
+  padding: 20;
+}
+
+a {
+  text-decoration: none;
+  color:inherit;
+  font-weight: 500;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+.tool-set-app {
+  display: flex;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  /* position: relative;
+  color: white;
+  height: 100vh;
+  background: linear-gradient(
+    200.96deg,
+    #fedc2a -29.09%,
+    #dd5789 51.77%,
+    #7a2c9e 129.35%
+  );
+  font-family: sans-serif;
+  overflow-y: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+button {
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  appearance: none;
+  font-size: 1.3rem;
+  box-shadow: 0px 8px 28px -6px rgba(24, 39, 75, 0.12),
+    0px 18px 88px -4px rgba(24, 39, 75, 0.14);
+  transition: transform ease-in 0.1s;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+li {
+  list-style: none;
+}
+
+
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+}
+
+.Hello {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+}

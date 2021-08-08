@@ -1,0 +1,26 @@
+.tool-set-sider-category {
+  padding: 7px 0;
+}
+
+.tool-set-sider-category-title {
+  display: flex;
+  align-items: center;
+  margin: 2.5px 0;
+  font-size: 11px;
+  margin-left: 15px;
+  font-weight: 500;
+}
+
+.tool-set-sider-category-item {
+  padding: 5px 0 5px 41px;
+}
+
+.un-selected:hover {
+  background-color: hsla(0,0%,0%,.1);
+  cursor: pointer;
+}
+
+.is-selected {
+  background: var(--color-accent);
+  color: white;
+}
