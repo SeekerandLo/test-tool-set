@@ -17,6 +17,9 @@
 /* Category Colors */
 /* 测试页面的选中颜色 */
 .tool-set-sider-category-test-manage       { --color-accent: hsl(116, 30%, 36%); }
+.tool-set-week-plan       { --color-accent: hsl(116, 30%, 36%); }
+
+
 .tool-set-sider-category-test2       { --color-accent: hsl(222, 53%, 50%); }
 
 .u-category-menu          { --color-accent: hsl(194, 60%, 36%); }

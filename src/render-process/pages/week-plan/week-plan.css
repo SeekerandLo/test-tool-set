@@ -1,0 +1,92 @@
+.week-plan-input:focus {
+  outline: none;
+}
+
+.week-plan-input {
+  padding: 0 10px;
+}
+
+.week-title {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.week-item {
+  height: 124px;
+  padding: 0 0 2px 0;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.week-item::-webkit-scrollbar {
+  width: 0;
+}
+
+.week-day-item {
+  background: white;
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: var(--color-subtle);
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+}
+
+.week-day-item:hover {
+  opacity: 0.8;
+}
+
+.week-plan-content {
+  background: rgb(245, 245, 245);
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.week-plan-input {
+  width: 90%;
+  box-sizing: border-box;
+  height: 40px;
+  position: absolute;
+  bottom: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  color: var(--color-subtle);
+}
+
+.week-header-item {
+  height: 150px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  margin: 0px 5px;
+  font-size: 13px;
+  color: var(--color-subtle);
+  padding: 5px;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  background: white;
+  width: 100px;
+}
+
+.week-header-item:hover {
+  opacity: 0.8;
+}
+
+.weeb-item-delete-wrapper {
+  width: 5%;
+    display: flex;
+    justify-content: flex-end;
+    color: rgb(204, 204, 204);
+}
