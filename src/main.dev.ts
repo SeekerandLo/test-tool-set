@@ -75,6 +75,7 @@ const createWindow = async () => {
     webPreferences: {
       nodeIntegration: true,
     },
+    resizable: false,
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);

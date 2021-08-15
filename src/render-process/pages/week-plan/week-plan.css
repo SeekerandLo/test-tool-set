@@ -40,7 +40,8 @@
 }
 
 .week-day-item:hover {
-  opacity: 0.8;
+  /* opacity: 0.8; */
+  background: rgb(253, 253, 253);
 }
 
 .week-plan-content {
@@ -52,6 +53,10 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+}
+
+.week-plan-content-show::-webkit-scrollbar {
+  width: 0;
 }
 
 .week-plan-input {
@@ -81,12 +86,17 @@
 }
 
 .week-header-item:hover {
-  opacity: 0.8;
+  /* opacity: 0.8; */
+  background: rgb(253, 253, 253);
 }
 
 .weeb-item-delete-wrapper {
   width: 5%;
-    display: flex;
-    justify-content: flex-end;
-    color: rgb(204, 204, 204);
+  display: flex;
+  justify-content: flex-end;
+  color: rgb(204, 204, 204);
+}
+
+.weeb-item-delete-btn:hover {
+  opacity: 0.8;
 }

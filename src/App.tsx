@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import './App.global.css';
-import IndexPage from './render-process/pages';
+import IndexPage from './render-process/pages/index/index';
 import WeeklyPlan from './render-process/pages/week-plan/week-plan';
 import Sider from './render-process/layout/sider/sider';
 

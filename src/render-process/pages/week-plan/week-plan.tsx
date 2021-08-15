@@ -1,71 +1,76 @@
 import React, { useState, useEffect } from 'react';
-
+import { useSpring, animated } from 'react-spring';
+import fs from 'fs';
+import {
+  initWeekDBJsonSync,
+  weekPlanFilePath,
+  updateWeekPlanDBJSON,
+} from './db';
 import '../../../App.global.css';
 
-// 每个 todoItem 的类型
-type PlanType = {
-  content?: string;
-  complete?: boolean;
-};
+const WeekPlan = () => {
+  const date = new Date();
 
-// 每天的类型
-type WeekPlanType = {
-  key: string;
-  plan: PlanType[];
-  current?: boolean;
-};
-
-// 一周的类型
-type WeekType = WeekPlanType[];
-
-const week: WeekType = [
-  {
-    key: '周一',
-    plan: [],
-  },
-  {
-    key: '周二',
-    plan: [],
-  },
-  {
-    key: '周三',
-    plan: [],
-  },
-  {
-    key: '周四',
-    plan: [],
-  },
-  {
-    key: '周五',
-    plan: [],
-  },
-  {
-    key: '周六',
-    plan: [],
-  },
-  {
-    key: '周日',
-    plan: [],
-  },
-];
-
-const Test = () => {
-  const [weekPlan, setWeekPlan] = useState(week);
-  const [currentDay, setCurrentDay] = useState(new Date().getDay() - 1);
+  /**
+   * state
+   */
+  const [weekPlan, setWeekPlan] = useState(null);
+  const [currentDay, setCurrentDay] = useState(
+    date.getDay() === 0 ? 7 - 1 : date.getDay() - 1
+  );
   const [currentEditingPlanItem, setCurrentEditingPlanItem] = useState('');
-
-  useEffect(() => {
-    console.log('调用');
-    document.title = `TTS: Week Plan`;
-    // 从本地json中还原
+  const [showInput, setShowInput] = useState(false);
+  const { x } = useSpring({
+    from: { x: 0 },
+    x: showInput ? 1 : 0,
+    config: { duration: 300 },
   });
 
+  /**
+   * 填充日期
+   */
+  function handleFillDate() {
+    if (weekPlan !== null) {
+      const tempWeekPlan = [...weekPlan];
+      const currentDate = date.getDate();
+
+      tempWeekPlan.forEach((tempWeek, index) => {
+        tempWeek.date =
+          currentDate - ((currentDay === 0 ? currentDay - 1 : 6) - index);
+      });
+
+      setWeekPlan(tempWeekPlan);
+    }
+  }
+
+  /**
+   * effect
+   */
   useEffect(() => {
-    console.log('weekplan', weekPlan);
+    document.title = `TTS: Week Plan: ${date.getMonth() + 1} 月`;
+
+    initWeekDBJsonSync();
+
+    const weeka = fs.readFileSync(weekPlanFilePath, 'utf8');
+
+    let tempWeekPlan = [];
+    tempWeekPlan = JSON.parse(weeka);
+    setWeekPlan(tempWeekPlan);
+
+    handleFillDate();
+  }, []);
+
+  useEffect(() => {
+    if (weekPlan !== null) {
+      updateWeekPlanDBJSON(weekPlan);
+    }
   }, [weekPlan]);
 
+  /**
+   * 按下回车事件
+   */
   function handlePressEnterKey(e) {
-    if (e.code === 'Enter') {
+    if (e.code === 'Enter' && currentEditingPlanItem !== '') {
       const tempWeekPlan = [...weekPlan];
 
       const currentDayInfo = tempWeekPlan[currentDay];
@@ -84,7 +89,7 @@ const Test = () => {
    * 删除计划
    * @param index planIndex
    */
-  function handleDeletePlanItem(index) {
+  function handleDeletePlanItem(index: number) {
     const tempWeekPlan = [...weekPlan];
     const currentDayInfo = tempWeekPlan[currentDay];
 
@@ -92,93 +97,142 @@ const Test = () => {
     setWeekPlan(tempWeekPlan);
   }
 
+  function handleDoubleClick() {
+    setShowInput(!showInput);
+
+    if (!showInput) {
+      setTimeout(() => {
+        document.getElementById('week-plan-input')?.focus();
+      }, 200);
+    }
+  }
+
+  function renderInput() {
+    return (
+      <animated.input
+        type="text"
+        id="week-plan-input"
+        className="week-plan-input"
+        onKeyPress={handlePressEnterKey}
+        onChange={(e) => {
+          setCurrentEditingPlanItem(e.target.value);
+        }}
+        value={currentEditingPlanItem || ''}
+        style={{
+          opacity: x.to({ range: [0, 1], output: [0, 1] }),
+        }}
+      />
+    );
+  }
+
   /**
    * 渲染顶部的周几
    */
-  function renderWeek() {
-    return weekPlan.map((day, index) => {
-      return (
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-        <div
-          key={day.key}
-          className="week-header-item"
-          onClick={() => {
-            setCurrentDay(index);
-          }}
-        >
-          <div className="week-title">
-            <span style={{ lineHeight: '100%' }}>{day.key}</span>
-            {currentDay === index ? (
-              <div
-                style={{
-                  height: 8,
-                  width: 8,
-                  borderRadius: '50%',
-                  background: 'var(--color-accent)',
-                  marginLeft: 5,
-                }}
-              />
-            ) : (
-              ''
-            )}
+  function renderWeekHeader() {
+    if (weekPlan !== null) {
+      return weekPlan.map((day, index) => {
+        return (
+          <div
+            key={day.key}
+            className="week-header-item"
+            onClick={() => {
+              setCurrentDay(index);
+            }}
+          >
+            <div className="week-title">
+              <span style={{ lineHeight: '100%' }}>
+                <span style={{ fontWeight: 'bold' }}>{day.key}</span>
+                <span>{day.date}</span>
+              </span>
+              {currentDay === index ? (
+                <div
+                  style={{
+                    height: 8,
+                    width: 8,
+                    borderRadius: '50%',
+                    background: 'var(--color-accent)',
+                    marginLeft: 5,
+                  }}
+                />
+              ) : (
+                ''
+              )}
+            </div>
+            <div className="week-item">
+              {day.plan.map((item) => (
+                <div
+                  key={Math.random()}
+                  style={{
+                    background: 'var(--color-border)',
+                    height: 5,
+                    marginTop: 5,
+                  }}
+                />
+              ))}
+            </div>
           </div>
-          <div className="week-item">
-            {day.plan.map((item) => (
-              <div
-                key={Math.random()}
-                style={{
-                  background: `${
-                    day.current ? 'white' : 'var(--color-border)'
-                  }`,
-                  height: 5,
-                  marginTop: 5,
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      );
-    });
+        );
+      });
+    }
   }
 
   /**
    * 渲染周计划
    */
   function renderWeekPlan() {
-    return weekPlan[currentDay].plan.map((aPlan, index) => (
-      <div className="week-day-item" key={Math.random()}>
-        {/* 优化整体长度设置 */}
-        <span
-          style={{
-            width: 730,
-            overflow: 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}
-        >
-          {aPlan.content}
-        </span>
-
-        <span
-          className="weeb-item-delete-wrapper"
-          style={{
-            width: '5%',
-            display: 'flex',
-            justifyContent: 'flex-end',
-            color: 'rgb(204, 204, 204)',
-          }}
-        >
-          <span
-            onClick={() => {
-              handleDeletePlanItem(index);
+    if (weekPlan !== null) {
+      if (weekPlan[currentDay].plan.length === 0) {
+        return (
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              color: 'var(--color-subtle)',
+              userSelect: 'none',
             }}
           >
-            ✖
+            暂无内容，双击唤出输入框
+          </div>
+        );
+      }
+      return weekPlan[currentDay].plan.map((aPlan, index) => (
+        <div className="week-day-item" key={Math.random()}>
+          {/* 优化整体长度设置 */}
+          <span
+            style={{
+              width: 730,
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {aPlan.content}
           </span>
-        </span>
-      </div>
-    ));
+
+          <span
+            className="weeb-item-delete-wrapper"
+            style={{
+              width: '5%',
+              display: 'flex',
+              justifyContent: 'flex-end',
+              color: 'rgb(204, 204, 204)',
+            }}
+          >
+            <span
+              className="weeb-item-delete-btn"
+              onClick={() => {
+                handleDeletePlanItem(index);
+              }}
+            >
+              ✖
+            </span>
+          </span>
+        </div>
+      ));
+    }
   }
 
   return (
@@ -193,26 +247,22 @@ const Test = () => {
           display: 'flex',
         }}
       >
-        {renderWeek()}
+        {renderWeekHeader()}
       </div>
-      <div className="week-plan-content">
+      <div className="week-plan-content" onDoubleClick={handleDoubleClick}>
         <div
           className="week-plan-content-show"
           style={{ width: '100%', height: '460px', overflowY: 'auto' }}
+          onScroll={() => {
+            setShowInput(false);
+          }}
         >
           {renderWeekPlan()}
         </div>
-        <input
-          className="week-plan-input"
-          onKeyPress={handlePressEnterKey}
-          onChange={(e) => {
-            setCurrentEditingPlanItem(e.target.value);
-          }}
-          value={currentEditingPlanItem || ''}
-        />
+        {renderInput()}
       </div>
     </div>
   );
 };
 
-export default Test;
+export default WeekPlan;
