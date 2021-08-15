@@ -15,6 +15,7 @@ const WeekPlan = () => {
    * state
    */
   const [weekPlan, setWeekPlan] = useState(null);
+  // 今天是周几在 week 中的 index
   const [currentDay, setCurrentDay] = useState(
     date.getDay() === 0 ? 7 - 1 : date.getDay() - 1
   );
@@ -27,23 +28,6 @@ const WeekPlan = () => {
   });
 
   /**
-   * 填充日期
-   */
-  function handleFillDate() {
-    if (weekPlan !== null) {
-      const tempWeekPlan = [...weekPlan];
-      const currentDate = date.getDate();
-
-      tempWeekPlan.forEach((tempWeek, index) => {
-        tempWeek.date =
-          currentDate - ((currentDay === 0 ? currentDay - 1 : 6) - index);
-      });
-
-      setWeekPlan(tempWeekPlan);
-    }
-  }
-
-  /**
    * effect
    */
   useEffect(() => {
@@ -51,13 +35,11 @@ const WeekPlan = () => {
 
     initWeekDBJsonSync();
 
-    const weeka = fs.readFileSync(weekPlanFilePath, 'utf8');
+    const weekJSON = fs.readFileSync(weekPlanFilePath, 'utf8');
 
     let tempWeekPlan = [];
-    tempWeekPlan = JSON.parse(weeka);
+    tempWeekPlan = JSON.parse(weekJSON);
     setWeekPlan(tempWeekPlan);
-
-    handleFillDate();
   }, []);
 
   useEffect(() => {
@@ -182,21 +164,7 @@ const WeekPlan = () => {
   function renderWeekPlan() {
     if (weekPlan !== null) {
       if (weekPlan[currentDay].plan.length === 0) {
-        return (
-          <div
-            style={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: 'var(--color-subtle)',
-              userSelect: 'none',
-            }}
-          >
-            暂无内容，双击唤出输入框
-          </div>
-        );
+        return <div className="week-day-noitem">暂无内容，双击唤出输入框</div>;
       }
       return weekPlan[currentDay].plan.map((aPlan, index) => (
         <div className="week-day-item" key={Math.random()}>

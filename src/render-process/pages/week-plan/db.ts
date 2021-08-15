@@ -35,6 +35,13 @@ function initWeekDBJsonSync() {
   initTTSDirSync();
 
   if (!fs.existsSync(weekPlanFilePath)) {
+    const date = new Date();
+    const currentDate = date.getDate();
+    const currentDay = date.getDay() === 0 ? 7 - 1 : date.getDay() - 1;
+    week.forEach((aDay: { date: number }, index: number) => {
+      aDay.date = currentDate - (currentDay - index);
+    });
+
     fs.writeFileSync(`${ttsPath}/week-plan.json`, JSON.stringify(week), 'utf8');
   }
 }
