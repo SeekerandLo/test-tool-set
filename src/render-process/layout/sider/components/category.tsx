@@ -76,14 +76,28 @@ class Category extends React.Component {
   };
 
   renderIcon = (icon) => {
-    if(!icon) {
+    if (!icon) {
       return (
-        <div style={{ width: 8, height: 8, background: 'var(--color-subtle)', borderRadius: '50%' }}>
-
-        </div>
-      )
+        <div
+          style={{
+            width: 8,
+            height: 8,
+            background: 'var(--color-subtle)',
+            borderRadius: '50%',
+          }}
+        />
+      );
     }
-  }
+    return (
+      <div
+        style={{
+          width: 15,
+        }}
+      >
+        {icon}
+      </div>
+    );
+  };
 
   render() {
     const { route } = this.state;
@@ -95,7 +109,7 @@ class Category extends React.Component {
         <h5 className="tool-set-sider-category-title">
           {/* TODO 支持 svg */}
           {/* {icon} */}
-          {this.renderIcon()}
+          {this.renderIcon(icon)}
           {link ? (
             <Link
               style={{ marginLeft: 8 }}

@@ -31,18 +31,50 @@ function initTTSDirSync() {
   }
 }
 
+function writeInWeekPlan(
+  currentDate: number,
+  currentDay: number,
+  currentMonth: number
+) {
+  week.forEach((aDay: { date: number; month: number }, index: number) => {
+    aDay.date = currentDate - (currentDay - index);
+    aDay.month = currentMonth;
+  });
+
+  fs.writeFileSync(`${ttsPath}/week-plan.json`, JSON.stringify(week), 'utf8');
+}
+
 function initWeekDBJsonSync() {
   initTTSDirSync();
+  const date = new Date();
+  const currentDate = date.getDate();
+  const currentDay = date.getDay() === 0 ? 7 - 1 : date.getDay() - 1;
+  const currentMonth = date.getMonth() + 1;
 
+  // 如果文件不存在，则写入
   if (!fs.existsSync(weekPlanFilePath)) {
-    const date = new Date();
-    const currentDate = date.getDate();
-    const currentDay = date.getDay() === 0 ? 7 - 1 : date.getDay() - 1;
-    week.forEach((aDay: { date: number }, index: number) => {
-      aDay.date = currentDate - (currentDay - index);
-    });
+    writeInWeekPlan(currentDate, currentDay, currentMonth);
+  } else {
+    // 如果存在，则判断文件中周内第一天的日期和实际本周的第一天日期是否相等
+    const weekStr = fs.readFileSync(weekPlanFilePath, 'utf8');
+    let weekJson = '';
+    try {
+      weekJson = JSON.parse(weekStr);
+    } catch (e) {
+      writeInWeekPlan(currentDate, currentDay, currentMonth);
+      return;
+    }
 
-    fs.writeFileSync(`${ttsPath}/week-plan.json`, JSON.stringify(week), 'utf8');
+    const theFirst = weekJson[0];
+
+    const currentWeekMondayDate = currentDate - currentDay;
+
+    if (
+      theFirst.date !== currentWeekMondayDate ||
+      theFirst.month !== currentMonth
+    ) {
+      writeInWeekPlan(currentDate, currentDay, currentMonth);
+    }
   }
 }
 

@@ -100,13 +100,26 @@
   background: rgb(253, 253, 253);
 }
 
-.weeb-item-delete-wrapper {
+.week-item-btn-wrapper {
   width: 5%;
   display: flex;
   justify-content: flex-end;
   color: rgb(204, 204, 204);
 }
 
-.weeb-item-delete-btn:hover {
+.week-item-delete-btn:hover {
   opacity: 0.8;
+}
+
+.week-item-complete-btn {
+  margin-right: 10px;
+}
+
+.week-item-btn:hover {
+  opacity: 0.8;
+}
+
+.week-item-complete {
+  text-decoration: line-through;
+  color:rgb(204, 204, 204)
 }

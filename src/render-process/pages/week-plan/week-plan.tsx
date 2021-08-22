@@ -79,6 +79,14 @@ const WeekPlan = () => {
     setWeekPlan(tempWeekPlan);
   }
 
+  function handleCompletePlanItem(index: number) {
+    const tempWeekPlan = [...weekPlan];
+    const currentDayInfo = tempWeekPlan[currentDay];
+
+    currentDayInfo.plan[index].complete = !currentDayInfo.plan[index].complete;
+    setWeekPlan(tempWeekPlan);
+  }
+
   function handleDoubleClick() {
     setShowInput(!showInput);
 
@@ -176,12 +184,14 @@ const WeekPlan = () => {
               whiteSpace: 'nowrap',
               textOverflow: 'ellipsis',
             }}
+
+            className={`${aPlan.complete ? 'week-item-complete' : ''}`}
           >
             {aPlan.content}
           </span>
 
           <span
-            className="weeb-item-delete-wrapper"
+            className="week-item-btn-wrapper"
             style={{
               width: '5%',
               display: 'flex',
@@ -190,7 +200,15 @@ const WeekPlan = () => {
             }}
           >
             <span
-              className="weeb-item-delete-btn"
+              className="week-item-btn week-item-complete-btn"
+              onClick={() => {
+                handleCompletePlanItem(index);
+              }}
+            >
+              ✔
+            </span>
+            <span
+              className="week-item-btn"
               onClick={() => {
                 handleDeletePlanItem(index);
               }}
