@@ -46,6 +46,8 @@ class Menu extends React.Component {
   handleClickSubMenu = (selectedItem) => {
     console.log('点击了', selectedItem);
 
+    document.title = `TTS: ${Math.random()}`;
+
     const { stateRoute } = this.state;
     const tempStateReoute = stateRoute;
     tempStateReoute.map((route) => {

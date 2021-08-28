@@ -1,0 +1,30 @@
+{
+  "key": 1,
+  "key5": [
+    "array2 elemnt1",
+    "arra2 em2"
+  ],
+  "key2": "value",
+  "ke3y": "value",
+  "key4": [
+    "array elemnt1",
+    "arra em2"
+  ],
+  "test": {
+    "key": "value",
+    "array": [
+      "element"
+    ],
+    "object": {
+      "key": "value",
+      "array": [
+        "element"
+      ]
+    },
+    "objectArray": [
+      {
+        "key": "vssalues"
+      }
+    ]
+  }
+}

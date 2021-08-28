@@ -1,0 +1,17 @@
+{
+  "key": "value",
+  "array": [
+    "element"
+  ],
+  "object": {
+    "key": "value",
+    "array": [
+      "element"
+    ]
+  },
+  "objectArray": [
+    {
+      "key": "value"
+    }
+  ]
+}

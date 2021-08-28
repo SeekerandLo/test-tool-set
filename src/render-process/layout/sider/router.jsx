@@ -10,7 +10,7 @@ const routes = [
     icon: '📑',
   },
   {
-    name: '测试管理',
+    name: '项目管理',
     link: null,
     /**
      * 这里的key与variables.css中的类名对应
@@ -25,6 +25,25 @@ const routes = [
     ],
     icon: '📑',
   },
+  {
+    name: '实用工具',
+    link: null,
+    /**
+     * 这里的key与variables.css中的类名对应
+     * 如想添加新的颜色，则命名为 tool-set-sider-category-${key}
+     */
+    key: 'practical-tool',
+    children: [
+      {
+        name: 'JSON',
+        link: '/json',
+      },
+    ],
+    icon: '📑',
+  },
+  // http 测试工具
+  // 简单压测
+  // json 格式化
 ];
 
 export default routes;

@@ -31,8 +31,6 @@ const WeekPlan = () => {
    * effect
    */
   useEffect(() => {
-    document.title = `TTS: Week Plan: ${date.getMonth() + 1} 月`;
-
     initWeekDBJsonSync();
 
     const weekJSON = fs.readFileSync(weekPlanFilePath, 'utf8');
@@ -149,16 +147,20 @@ const WeekPlan = () => {
               )}
             </div>
             <div className="week-item">
-              {day.plan.map((item) => (
-                <div
-                  key={Math.random()}
-                  style={{
-                    background: 'var(--color-border)',
-                    height: 5,
-                    marginTop: 5,
-                  }}
-                />
-              ))}
+              {day.plan.map((item) => {
+                if (!item.complete) {
+                  return (
+                    <div
+                      key={Math.random()}
+                      style={{
+                        background: 'var(--color-border)',
+                        height: 5,
+                        marginTop: 5,
+                      }}
+                    />
+                  );
+                }
+              })}
             </div>
           </div>
         );
@@ -184,7 +186,6 @@ const WeekPlan = () => {
               whiteSpace: 'nowrap',
               textOverflow: 'ellipsis',
             }}
-
             className={`${aPlan.complete ? 'week-item-complete' : ''}`}
           >
             {aPlan.content}
