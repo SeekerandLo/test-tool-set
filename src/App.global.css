@@ -6,6 +6,7 @@
 @import url(./render-process/assets/variables.css);
 @import url(./render-process/assets/nav.css);
 @import url(./render-process/pages/week-plan/week-plan.css);
+@import url(./render-process/pages/json-format/json-format.css);
 
 .icon {
   color: var(--color-border)

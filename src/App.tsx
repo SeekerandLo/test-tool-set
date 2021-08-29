@@ -18,6 +18,7 @@ export default function App() {
           <Route path="/json" component={JsonFormat} />
           <Redirect to="/" />
         </main>
+        {/* 右侧工具栏 */}
       </div>
     </Router>
   );

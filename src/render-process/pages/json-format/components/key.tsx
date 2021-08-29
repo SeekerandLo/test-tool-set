@@ -2,14 +2,14 @@ import React from 'react';
 import Punctuation from './punctuation';
 
 type KeyProps = {
-  value: string;
+  value: string | null;
 };
 
 const Key = (props: KeyProps, state) => {
   const { value } = props;
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="tool-set-json-key" style={{ display: 'flex' }}>
       <Punctuation type={'"'} />
       <div style={{ color: 'var(--color-accent)' }}>{value}</div>
       <Punctuation type={'"'} />

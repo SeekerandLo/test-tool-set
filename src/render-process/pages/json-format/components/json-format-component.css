@@ -1,0 +1,8 @@
+.tool-set-json-viewer-content {
+  background: rgb(245, 245, 245);
+  height: 100%;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  padding: 5px;
+  overflow-y: auto;
+}

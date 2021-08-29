@@ -7,7 +7,14 @@ type PunctuationProps = {
 const Punctuation = (props: PunctuationProps, state) => {
   const { type } = props;
 
-  return <div>{type}</div>;
+  return (
+    <div
+      className="tool-set-json-punctuation"
+      style={{ margin: '0 2px 0 2px' }}
+    >
+      {type}
+    </div>
+  );
 };
 
 export default Punctuation;
