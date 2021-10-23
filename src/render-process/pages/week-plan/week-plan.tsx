@@ -21,6 +21,10 @@ const WeekPlan = () => {
   );
   const [currentEditingPlanItem, setCurrentEditingPlanItem] = useState('');
   const [showInput, setShowInput] = useState(false);
+  // 编辑
+  const [edit, setEdit] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+
   const { x } = useSpring({
     from: { x: 0 },
     x: showInput ? 1 : 0,
@@ -54,14 +58,23 @@ const WeekPlan = () => {
       const tempWeekPlan = [...weekPlan];
 
       const currentDayInfo = tempWeekPlan[currentDay];
-      currentDayInfo.plan.push({
-        content: currentEditingPlanItem,
-        complete: false,
-      });
+
+      if (edit && editIndex != null) {
+        currentDayInfo.plan[editIndex].content = currentEditingPlanItem;
+        currentDayInfo.plan[editIndex].complete = false;
+      } else {
+        currentDayInfo.plan.push({
+          content: currentEditingPlanItem,
+          complete: false,
+        });
+      }
 
       // 更新周计划、更新当前编辑值
       setCurrentEditingPlanItem('');
+      setEdit(false);
+      setEditIndex(null);
       setWeekPlan(tempWeekPlan);
+      setShowInput(false);
     }
   }
 
@@ -83,6 +96,24 @@ const WeekPlan = () => {
 
     currentDayInfo.plan[index].complete = !currentDayInfo.plan[index].complete;
     setWeekPlan(tempWeekPlan);
+  }
+
+  function handleEditPlanItem(index: number) {
+    setShowInput(!showInput);
+    setEdit(true);
+
+    if (!showInput) {
+      setTimeout(() => {
+        document.getElementById('week-plan-input')?.focus();
+      }, 200);
+
+      const tempWeekPlan = [...weekPlan];
+      const currentDayInfo = tempWeekPlan[currentDay];
+
+      const { content } = currentDayInfo.plan[index];
+      setCurrentEditingPlanItem(content);
+      setEditIndex(index);
+    }
   }
 
   function handleDoubleClick() {
@@ -166,6 +197,7 @@ const WeekPlan = () => {
         );
       });
     }
+    return null;
   }
 
   /**
@@ -180,26 +212,24 @@ const WeekPlan = () => {
         <div className="week-day-item" key={Math.random()}>
           {/* 优化整体长度设置 */}
           <span
-            style={{
-              width: 730,
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis',
-            }}
-            className={`${aPlan.complete ? 'week-item-complete' : ''}`}
+            className={`${
+              aPlan.complete
+                ? 'week-item-complete week-item-normal'
+                : 'week-item-normal'
+            }`}
           >
             {aPlan.content}
           </span>
 
-          <span
-            className="week-item-btn-wrapper"
-            style={{
-              width: '5%',
-              display: 'flex',
-              justifyContent: 'flex-end',
-              color: 'rgb(204, 204, 204)',
-            }}
-          >
+          <span className="week-item-btn-wrapper">
+            <span
+              className="week-item-btn week-item-complete-btn"
+              onClick={() => {
+                handleEditPlanItem(index);
+              }}
+            >
+              ✏
+            </span>
             <span
               className="week-item-btn week-item-complete-btn"
               onClick={() => {

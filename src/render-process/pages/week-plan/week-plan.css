@@ -19,6 +19,15 @@
   overflow-y: auto;
 }
 
+.week-item-normal {
+  color: var(--color-subtle);
+
+  width: 500;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 .week-item::-webkit-scrollbar {
   width: 0;
 }
@@ -37,6 +46,8 @@
   box-sizing: border-box;
   cursor: pointer;
   user-select: none;
+
+  justify-content: space-between;
 }
 
 .week-day-item:hover {
@@ -101,9 +112,6 @@
 }
 
 .week-item-btn-wrapper {
-  width: 5%;
-  display: flex;
-  justify-content: flex-end;
   color: rgb(204, 204, 204);
 }
 
