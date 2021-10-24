@@ -22,6 +22,10 @@ const routes = [
         name: '周计划',
         link: '/week-plan',
       },
+      {
+        name: '备忘录',
+        link: '/note',
+      },
     ],
     icon: '📑',
   },

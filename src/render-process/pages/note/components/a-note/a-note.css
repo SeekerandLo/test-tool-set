@@ -1,0 +1,14 @@
+.a-note {
+  padding: 10px 5px 10px 10px;
+  font-size: 13px;
+  border-top: 1px solid var(--color-border);
+  box-sizing: border-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.a-note:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}

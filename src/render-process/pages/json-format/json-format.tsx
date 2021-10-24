@@ -24,10 +24,11 @@ const JsonFormat = () => {
 
   return (
     <div
-      className="tool-set-json"
+      className="tool-set-json tool-set-main-padding-20"
       style={{
         display: 'flex',
         height: '100%',
+        boxSizing: 'border-box',
         justifyContent: 'space-between',
       }}
     >

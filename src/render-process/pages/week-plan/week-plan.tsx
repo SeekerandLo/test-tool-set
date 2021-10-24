@@ -123,6 +123,8 @@ const WeekPlan = () => {
       setTimeout(() => {
         document.getElementById('week-plan-input')?.focus();
       }, 200);
+    } else {
+      setCurrentEditingPlanItem('');
     }
   }
 
@@ -254,8 +256,8 @@ const WeekPlan = () => {
 
   return (
     <div
-      className="tool-set-week-plan"
-      style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+      className="tool-set-week-plan tool-set-main-padding-20"
+      style={{ display: 'flex', flexDirection: 'column' }}
     >
       <div
         className="week"

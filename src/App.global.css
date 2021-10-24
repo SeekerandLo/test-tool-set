@@ -7,6 +7,7 @@
 @import url(./render-process/assets/nav.css);
 @import url(./render-process/pages/week-plan/week-plan.css);
 @import url(./render-process/pages/json-format/json-format.css);
+@import url(./render-process/pages/note/note.css);
 
 .icon {
   color: var(--color-border)
@@ -15,6 +16,20 @@
 
 .tool-set-main {
   padding: 20;
+}
+
+.tool-set-main-padding-20 {
+  padding: 20px;
+}
+
+.no-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-subtle);
+  user-select: none;
 }
 
 a {
@@ -57,7 +72,7 @@ body {
   align-items: center; */
 }
 
-button {
+/* button {
   background-color: white;
   padding: 10px 20px;
   border-radius: 10px;
@@ -68,11 +83,11 @@ button {
     0px 18px 88px -4px rgba(24, 39, 75, 0.14);
   transition: transform ease-in 0.1s;
   cursor: pointer;
-}
+} */
 
-button:hover {
+/* button:hover {
   transform: scale(1.05);
-}
+} */
 
 li {
   list-style: none;
@@ -97,4 +112,8 @@ a:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.normal-font-size {
+  font-size: 13px;
 }
